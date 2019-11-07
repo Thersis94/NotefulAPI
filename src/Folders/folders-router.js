@@ -5,7 +5,7 @@ const logger = require('../logger')
 const FoldersService = require('./folders-service')
 const { isWebUri } = require('valid-url')
 
-const foldersRouter = express.Router()
+const FolderRouter = express.Router()
 const bodyParser = express.json()
 
 const serializeFolder = folder => ({
@@ -53,7 +53,7 @@ FolderRouter
   })
 
 
-folderRouter
+FolderRouter
   .route('/:folder_id')
 
   .all((req, res, next) => {
@@ -116,4 +116,4 @@ folderRouter
       .catch(next)
   })
 
-module.exports = folderRouter
+module.exports = FolderRouter

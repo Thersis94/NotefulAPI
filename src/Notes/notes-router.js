@@ -5,14 +5,14 @@ const logger = require('../logger')
 const NotesService = require('./notes-service')
 const { isWebUri } = require('valid-url')
 
-const notesRouter = express.Router()
+const NotesRouter = express.Router()
 const bodyParser = express.json()
 
 const serializeNote = note => ({
   id: note.id,
   name: xss(note.name),
   modified: note.modified,
-  folderId: note.folderId,
+  folderid: note.folderid,
   content: xss(note.content),
 })
 
@@ -28,8 +28,8 @@ NotesRouter
   })
 
   .post(bodyParser, (req, res, next) => {
-    const { id, name, modified, folderId, content } = req.body
-    const newNote = { id, name, modified, folderId, content }
+    const { id, name, modified, folderid, content } = req.body
+    const newNote = { id, name, modified, folderid, content }
 
     for (const field of ['name', 'content']) {
       if (!newNote[field]) {
@@ -46,7 +46,6 @@ NotesRouter
       newNote
     )
       .then(note => {
-        logger.info(`Note with id ${Note.id} created.`)
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `${note.id}`))
@@ -56,7 +55,7 @@ NotesRouter
   })
 
 
-noteRouter
+NotesRouter
   .route('/:note_id')
 
   .all((req, res, next) => {
