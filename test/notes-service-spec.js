@@ -8,7 +8,7 @@ describe(`Notes service object`, function() {
   before(() => {
     db = knex({
       client: "pg",
-      connection: process.env.DB_TEST_URL
+      connection: process.env.DATABASE_TEST_URL
     });
     app.set("db", db);
   });
@@ -117,9 +117,6 @@ describe(`Notes service object`, function() {
             fieldToIgnore: 'should not be in GET response'
           })
           .expect(204)
-          .expect(res => {
-            console.log(res)
-          });
       })
     });
   });
